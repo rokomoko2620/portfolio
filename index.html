@@ -3,1060 +3,1037 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>高梨祐矢 — Portfolio</title>
+  <title>高梨祐矢 | Portfolio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    /* ─── Reset & Variables ─── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --bg: #0e0e0f;
-      --surface: #18181a;
-      --surface-hover: #22222a;
-      --border: rgba(255,255,255,0.07);
-      --text: #e8e8ea;
-      --text-sub: #7a7a82;
-      --accent: #c8a862;
-      --accent-dim: rgba(200,168,98,0.12);
-      --font-display: 'Playfair Display', Georgia, serif;
-      --font-body: 'Inter', system-ui, sans-serif;
+      --bg-primary: #fafafa;
+      --bg-secondary: #ffffff;
+      --bg-code: #f5f5f5;
+      --text-primary: #1a1a1a;
+      --text-secondary: #666666;
+      --text-muted: #999999;
+      --accent: #2563eb;
+      --accent-light: #dbeafe;
+      --border: #e5e5e5;
+      --shadow: 0 4px 20px rgba(0,0,0,0.08);
+      --radius: 12px;
     }
 
-    html { scroll-behavior: smooth; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
 
     body {
-      font-family: var(--font-body);
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      overflow-x: hidden;
+      font-family: 'Noto Sans JP', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.8;
+      font-size: 15px;
     }
 
-    /* ─── Noise Texture Overlay ─── */
-    body::before {
-      content: '';
-      position: fixed; inset: 0; z-index: 999;
-      pointer-events: none;
-      opacity: 0.025;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-      background-size: 200px 200px;
-    }
-
-    /* ─── Header / Hero ─── */
+    /* ========== HEADER ========== */
     header {
-      position: relative;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 0 clamp(24px, 6vw, 80px);
-      padding-bottom: clamp(60px, 10vw, 120px);
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border);
+      padding: 60px 24px 80px;
+      text-align: center;
     }
 
-    .header-line {
-      position: absolute;
-      top: 40px; left: clamp(24px, 6vw, 80px);
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .header-line .dot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      background: var(--accent);
-    }
-    .header-line span {
-      font-size: 13px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--text-sub);
-      font-weight: 400;
+    .header-content {
+      max-width: 700px;
+      margin: 0 auto;
     }
 
-    /* subtle radial glow behind title */
-    .hero-glow {
-      position: absolute;
-      top: 50%; left: 30%;
-      transform: translate(-50%, -50%);
-      width: 700px; height: 700px;
-      background: radial-gradient(circle, rgba(200,168,98,0.06) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    .hero-content { position: relative; z-index: 1; max-width: 820px; }
-
-    .hero-content h1 {
-      font-family: var(--font-display);
-      font-size: clamp(52px, 9vw, 96px);
+    header h1 {
+      font-size: 32px;
       font-weight: 700;
-      line-height: 1.05;
-      letter-spacing: -0.02em;
-      color: #fff;
-    }
-    .hero-content h1 em {
-      font-style: italic;
-      color: var(--accent);
-    }
-
-    .hero-meta {
-      margin-top: 32px;
-      display: flex;
-      align-items: center;
-      gap: 32px;
-      flex-wrap: wrap;
-    }
-    .hero-meta p {
-      font-size: 16px;
-      color: var(--text-sub);
-      font-weight: 300;
-      max-width: 480px;
-    }
-    .hero-meta .scroll-hint {
-      margin-left: auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-      color: var(--text-sub);
-      font-size: 11px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-    }
-    .scroll-hint .arrow {
-      width: 1px; height: 36px;
-      background: linear-gradient(to bottom, var(--accent), transparent);
-      animation: scrollArrow 2s ease-in-out infinite;
-    }
-    @keyframes scrollArrow {
-      0%, 100% { opacity: 0.3; transform: scaleY(0.6); }
-      50%      { opacity: 1;   transform: scaleY(1); }
-    }
-
-    /* ─── Section: Works ─── */
-    .works-section {
-      padding: clamp(60px, 10vw, 140px) clamp(24px, 6vw, 80px);
-    }
-
-    .section-label {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin-bottom: 64px;
-    }
-    .section-label .line {
-      width: 40px; height: 1px;
-      background: var(--accent);
-    }
-    .section-label span {
-      font-size: 12px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--text-sub);
-    }
-
-    /* ─── Work Card ─── */
-    .work-card {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      overflow: hidden;
-      margin-bottom: 40px;
-      transition: border-color 0.4s;
-      opacity: 0;
-      transform: translateY(30px);
-      animation: fadeUp 0.6s ease forwards;
-    }
-    .work-card:hover { border-color: var(--accent-dim); }
-
-    /* alternate layout: odd cards flip the grid */
-    .work-card:nth-child(even) { direction: rtl; }
-    .work-card:nth-child(even) > * { direction: ltr; }
-
-    @keyframes fadeUp {
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .work-card:nth-child(1) { animation-delay: 0.1s; }
-    .work-card:nth-child(2) { animation-delay: 0.2s; }
-    .work-card:nth-child(3) { animation-delay: 0.3s; }
-    .work-card:nth-child(4) { animation-delay: 0.4s; }
-
-    /* Visual side */
-    .work-visual {
-      position: relative;
-      min-height: 340px;
-      overflow: hidden;
-      background: #141416;
-    }
-
-    /* image gallery strip ─ スライド式 */
-    .work-visual .img-strip {
-      display: flex;
-      height: 100%;
-      min-height: 340px;
-      overflow: hidden;
-      position: relative;
-    }
-    .work-visual .img-strip img {
-      min-width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: brightness(0.9);
-      transition: filter 0.4s, transform 0.5s ease;
-      flex-shrink: 0;
-    }
-    .work-card:hover .img-strip img { filter: brightness(1); }
-
-    /* スライド ナビゲーション */
-    .slide-nav {
-      position: absolute;
-      bottom: 14px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 8px;
-      z-index: 2;
-    }
-    .slide-dot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.35);
-      cursor: pointer;
-      transition: background 0.3s;
-      border: none;
-    }
-    .slide-dot.active { background: var(--accent); }
-
-    /* 詳細モーダル */
-    .detail-modal-overlay {
-      position: fixed; inset: 0; z-index: 100;
-      background: rgba(0,0,0,0.82);
-      backdrop-filter: blur(5px);
-      display: flex; align-items: center; justify-content: center;
-      opacity: 0; pointer-events: none;
-      transition: opacity 0.3s;
-      padding: 40px clamp(16px, 4vw, 60px);
-    }
-    .detail-modal-overlay.active { opacity: 1; pointer-events: auto; }
-
-    .detail-modal {
-      position: relative;
-      width: 100%; max-width: 760px;
-      max-height: 85vh;
-      overflow-y: auto;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 48px 44px;
-      transform: translateY(20px);
-      transition: transform 0.35s;
-    }
-    .detail-modal-overlay.active .detail-modal { transform: translateY(0); }
-
-    /* スクロールバー */
-    .detail-modal::-webkit-scrollbar { width: 6px; }
-    .detail-modal::-webkit-scrollbar-track { background: transparent; }
-    .detail-modal::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-
-    .detail-close {
-      position: absolute;
-      top: 18px; right: 18px;
-      width: 34px; height: 34px;
-      border-radius: 50%;
-      background: var(--surface-hover);
-      border: 1px solid var(--border);
-      color: var(--text-sub);
-      font-size: 18px; cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      transition: border-color 0.2s, color 0.2s;
-    }
-    .detail-close:hover { border-color: var(--accent); color: #fff; }
-
-    .detail-modal .detail-number {
-      font-family: var(--font-display);
-      font-size: 11px;
-      color: var(--accent);
-      letter-spacing: 0.2em;
       margin-bottom: 8px;
+      letter-spacing: 0.02em;
     }
-    .detail-modal h2 {
-      font-family: var(--font-display);
-      font-size: 28px;
-      color: #fff;
-      margin-bottom: 16px;
-    }
-    .detail-modal .detail-tags {
-      display: flex; flex-wrap: wrap; gap: 8px;
+
+    header .subtitle {
+      font-size: 14px;
+      color: var(--text-secondary);
       margin-bottom: 24px;
     }
-    .detail-modal .detail-meta {
-      display: flex; gap: 24px; flex-wrap: wrap;
-      font-size: 13px; color: var(--text-sub);
-      margin-bottom: 28px;
-      padding-bottom: 24px;
-      border-bottom: 1px solid var(--border);
-    }
-    .detail-modal .detail-meta span { display: flex; align-items: center; gap: 6px; }
-    .detail-modal .detail-meta svg { width: 14px; height: 14px; opacity: 0.5; }
 
-    /* 詳細のセクション見出し */
-    .detail-modal .detail-section-title {
-      font-size: 11px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin: 28px 0 10px;
-    }
-    .detail-modal .detail-section-title:first-of-type { margin-top: 0; }
-
-    .detail-modal p {
-      font-size: 14px;
-      color: var(--text-sub);
-      line-height: 1.8;
-      margin-bottom: 12px;
+    header .intro {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.9;
     }
 
-    /* スクリプト構成テーブル */
-    .detail-modal table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 12px 0 20px;
-      font-size: 13px;
+    .contact-info {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-top: 24px;
+      flex-wrap: wrap;
     }
-    .detail-modal th {
-      text-align: left;
-      color: var(--text-sub);
-      font-weight: 400;
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 8px 12px;
-      border-bottom: 1px solid var(--border);
-    }
-    .detail-modal td {
-      padding: 10px 12px;
-      color: var(--text);
-      border-bottom: 1px solid rgba(255,255,255,0.04);
-    }
-    .detail-modal td:first-child {
-      color: var(--accent);
-      font-weight: 500;
-      white-space: nowrap;
-    }
-    .detail-modal td:last-child { color: var(--text-sub); }
 
-    /* 詳細ボタン */
-    .detail-btn {
+    .contact-info a {
       display: inline-flex;
       align-items: center;
       gap: 6px;
       color: var(--accent);
-      font-size: 13px;
+      text-decoration: none;
+      font-size: 14px;
       font-weight: 500;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 0;
       transition: opacity 0.2s;
     }
-    .detail-btn:hover { opacity: 0.7; }
-    .detail-btn svg { width: 14px; height: 14px; fill: none; stroke: var(--accent); stroke-width: 2; }
 
-    /* single image */
-    .work-visual img.solo {
-      width: 100%; height: 100%; object-fit: cover;
-      filter: brightness(0.9);
-      transition: filter 0.4s;
-    }
-    .work-card:hover .work-visual img.solo { filter: brightness(1); }
-
-    /* video thumbnail with play icon */
-    .work-visual .video-thumb {
-      position: relative;
-      width: 100%; height: 100%; min-height: 340px;
-      cursor: pointer;
-    }
-    .video-thumb img {
-      width: 100%; height: 100%; object-fit: cover;
-      filter: brightness(0.75);
-      transition: filter 0.4s;
-    }
-    .work-card:hover .video-thumb img { filter: brightness(0.95); }
-
-    .video-thumb .play-btn {
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      width: 56px; height: 56px;
-      border-radius: 50%;
-      background: rgba(200,168,98,0.18);
-      backdrop-filter: blur(6px);
-      border: 1px solid rgba(200,168,98,0.35);
-      display: flex; align-items: center; justify-content: center;
-      transition: background 0.3s, transform 0.3s;
-    }
-    .work-card:hover .play-btn {
-      background: rgba(200,168,98,0.3);
-      transform: translate(-50%, -50%) scale(1.08);
-    }
-    .play-btn svg { width: 18px; height: 18px; fill: var(--accent); margin-left: 3px; }
-
-    /* badge: 動画あり */
-    .video-badge {
-      position: absolute;
-      bottom: 16px; left: 16px;
-      background: rgba(14,14,15,0.75);
-      backdrop-filter: blur(8px);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 5px 14px;
-      font-size: 11px;
-      color: var(--accent);
-      letter-spacing: 0.08em;
+    .contact-info a:hover {
+      opacity: 0.7;
     }
 
-    /* Info side */
-    .work-info {
-      padding: 48px 44px;
+    /* ========== NAVIGATION ========== */
+    nav {
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 24px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    nav ul {
       display: flex;
-      flex-direction: column;
       justify-content: center;
-      gap: 16px;
+      gap: 32px;
+      list-style: none;
+      max-width: 900px;
+      margin: 0 auto;
     }
 
-    .work-number {
-      font-family: var(--font-display);
-      font-size: 11px;
+    nav a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 4px 0;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+    }
+
+    nav a:hover {
       color: var(--accent);
-      letter-spacing: 0.2em;
+      border-bottom-color: var(--accent);
     }
 
-    .work-info h2 {
-      font-family: var(--font-display);
-      font-size: clamp(24px, 3vw, 30px);
+    /* ========== MAIN ========== */
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 60px 24px 100px;
+    }
+
+    /* ========== SECTION ========== */
+    .section-title {
+      font-size: 13px;
       font-weight: 700;
-      color: #fff;
-      line-height: 1.2;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 40px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--accent);
+      display: inline-block;
     }
 
-    .work-tags {
+    /* ========== PROJECT CARD ========== */
+    .project {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 48px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .project-header {
+      padding: 32px 32px 24px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .project-number {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
+    }
+
+    .project-title {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .project-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+    }
+
+    .project-meta span {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .project-tags {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
     }
+
     .tag {
-      display: inline-block;
-      background: var(--accent-dim);
-      border: 1px solid rgba(200,168,98,0.18);
+      background: var(--accent-light);
       color: var(--accent);
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 500;
       padding: 4px 12px;
       border-radius: 20px;
-      letter-spacing: 0.04em;
     }
 
-    .work-info p {
+    /* ========== PROJECT CONTENT ========== */
+    .project-content {
+      padding: 32px;
+    }
+
+    .project-section {
+      margin-bottom: 28px;
+    }
+
+    .project-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .project-section-title {
       font-size: 14px;
-      color: var(--text-sub);
-      font-weight: 300;
-      line-height: 1.7;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+      padding-left: 12px;
+      border-left: 3px solid var(--accent);
     }
 
-    .work-meta-row {
+    .project-section p {
+      color: var(--text-secondary);
+      line-height: 1.9;
+    }
+
+    /* ========== MEDIA GALLERY ========== */
+    .media-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .media-item {
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--bg-code);
+      aspect-ratio: 16/10;
+    }
+
+    .media-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s;
+    }
+
+    .media-item:hover img {
+      transform: scale(1.02);
+    }
+
+    .media-item video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .media-item.video-item {
+      cursor: pointer;
+    }
+
+    .play-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.3);
       display: flex;
       align-items: center;
-      gap: 24px;
-      flex-wrap: wrap;
-      font-size: 12px;
-      color: var(--text-sub);
+      justify-content: center;
+      transition: background 0.2s;
     }
-    .work-meta-row span { display: flex; align-items: center; gap: 6px; }
-    .work-meta-row svg { width: 14px; height: 14px; opacity: 0.5; }
 
-    /* GitHub link */
+    .media-item:hover .play-overlay {
+      background: rgba(0,0,0,0.4);
+    }
+
+    .play-btn {
+      width: 56px;
+      height: 56px;
+      background: rgba(255,255,255,0.95);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .play-btn svg {
+      width: 20px;
+      height: 20px;
+      fill: var(--accent);
+      margin-left: 3px;
+    }
+
+    /* ========== TABLE ========== */
+    .info-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      margin-top: 12px;
+    }
+
+    .info-table th,
+    .info-table td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .info-table th {
+      background: var(--bg-code);
+      font-weight: 500;
+      color: var(--text-primary);
+      width: 180px;
+    }
+
+    .info-table td {
+      color: var(--text-secondary);
+    }
+
+    .info-table code {
+      background: var(--bg-code);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-family: 'Source Code Pro', monospace;
+      font-size: 13px;
+      color: var(--accent);
+    }
+
+    /* ========== TECH LIST ========== */
+    .tech-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .tech-item {
+      background: var(--bg-code);
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    /* ========== GITHUB LINK ========== */
     .github-link {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      color: var(--text);
-      font-size: 13px;
-      font-weight: 500;
+      background: var(--text-primary);
+      color: #fff;
       text-decoration: none;
       padding: 10px 20px;
-      border: 1px solid var(--border);
       border-radius: 8px;
-      background: var(--surface-hover);
-      transition: border-color 0.3s, background 0.3s;
-      width: fit-content;
-      margin-top: 4px;
+      font-size: 14px;
+      font-weight: 500;
+      margin-top: 20px;
+      transition: opacity 0.2s;
     }
+
     .github-link:hover {
-      border-color: var(--accent);
-      background: var(--accent-dim);
+      opacity: 0.85;
     }
-    .github-link svg { width: 16px; height: 16px; fill: var(--text-sub); }
 
-    /* ─── Modal: Video Player ─── */
+    .github-link svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
+
+    /* ========== VIDEO MODAL ========== */
     .modal-overlay {
-      position: fixed; inset: 0; z-index: 100;
-      background: rgba(0,0,0,0.85);
-      backdrop-filter: blur(4px);
-      display: flex; align-items: center; justify-content: center;
-      opacity: 0; pointer-events: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.9);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
       transition: opacity 0.3s;
+      padding: 24px;
     }
-    .modal-overlay.active { opacity: 1; pointer-events: auto; }
 
-    .modal-box {
-      position: relative;
-      width: 90%; max-width: 820px;
-      border-radius: 16px;
-      overflow: hidden;
-      background: #111;
-      transform: scale(0.94);
-      transition: transform 0.3s;
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
     }
-    .modal-overlay.active .modal-box { transform: scale(1); }
 
-    .modal-box video {
+    .modal-content {
+      max-width: 900px;
       width: 100%;
-      display: block;
-      max-height: 70vh;
+      position: relative;
+    }
+
+    .modal-content video {
+      width: 100%;
+      border-radius: 8px;
     }
 
     .modal-close {
       position: absolute;
-      top: 16px; right: 16px;
-      width: 36px; height: 36px;
+      top: -48px;
+      right: 0;
+      width: 40px;
+      height: 40px;
+      background: rgba(255,255,255,0.1);
+      border: none;
       border-radius: 50%;
-      background: rgba(0,0,0,0.6);
-      border: 1px solid var(--border);
       color: #fff;
-      font-size: 18px;
+      font-size: 24px;
       cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       transition: background 0.2s;
     }
-    .modal-close:hover { background: rgba(200,168,98,0.3); }
 
-    /* ─── Footer ─── */
+    .modal-close:hover {
+      background: rgba(255,255,255,0.2);
+    }
+
+    /* ========== SKILLS SECTION ========== */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 24px;
+    }
+
+    .skill-category {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+    }
+
+    .skill-category h3 {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .skill-category ul {
+      list-style: none;
+    }
+
+    .skill-category li {
+      font-size: 14px;
+      color: var(--text-secondary);
+      padding: 6px 0;
+    }
+
+    /* ========== FOOTER ========== */
     footer {
-      padding: 80px clamp(24px, 6vw, 80px) 40px;
+      text-align: center;
+      padding: 40px 24px;
       border-top: 1px solid var(--border);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 16px;
-    }
-    footer p { font-size: 13px; color: var(--text-sub); }
-    footer .footer-links { display: flex; gap: 24px; }
-    footer .footer-links a {
       font-size: 13px;
-      color: var(--text-sub);
-      text-decoration: none;
-      transition: color 0.3s;
+      color: var(--text-muted);
     }
-    footer .footer-links a:hover { color: var(--accent); }
 
-    /* ─── Responsive ─── */
-    @media (max-width: 780px) {
-      .work-card { grid-template-columns: 1fr; }
-      .work-card:nth-child(even) { direction: ltr; }
-      .work-visual { order: -1; min-height: 260px; }
-      .work-info { padding: 32px 28px; }
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 600px) {
+      header {
+        padding: 40px 20px 60px;
+      }
+
+      header h1 {
+        font-size: 26px;
+      }
+
+      nav ul {
+        gap: 20px;
+      }
+
+      nav a {
+        font-size: 13px;
+      }
+
+      main {
+        padding: 40px 16px 80px;
+      }
+
+      .project-header,
+      .project-content {
+        padding: 24px 20px;
+      }
+
+      .project-title {
+        font-size: 20px;
+      }
+
+      .info-table th {
+        width: 120px;
+      }
+
+      .media-gallery {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 <body>
 
-<!-- ────────────── HERO ────────────── -->
+<!-- ========== HEADER ========== -->
 <header>
-  <div class="hero-glow"></div>
-  <div class="header-line">
-    <div class="dot"></div>
-    <span>Portfolio</span>
-  </div>
-  <div class="hero-content">
-    <h1>高梨祐矢<br><em>— Creative Developer</em></h1>
-    <div class="hero-meta">
-      <p>明治大学 総合数理学部先端メディアサイエンス学科。</p>
-      <div class="scroll-hint">
-        <span>Scroll</span>
-        <div class="arrow"></div>
-      </div>
+  <div class="header-content">
+    <h1>高梨 祐矢</h1>
+    <p class="subtitle">明治大学 総合数理学部 先端メディアサイエンス学科</p>
+    <p class="intro">
+      Proceesingやhtml、PHP、U＃（C＃）にの基礎を習得しています。<br>
+      また、最近はPythonを勉強しています。データ分析、セキュリティについて学んでいます。
+    </p>
+    <div class="contact-info">
+      <a href="https://github.com/YOUR_GITHUB" target="_blank">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+        GitHub
+      </a>
     </div>
   </div>
 </header>
 
-<!-- ────────────── WORKS ────────────── -->
-<section class="works-section">
-  <div class="section-label">
-    <div class="line"></div>
-    <span>Selected Works</span>
-  </div>
+<!-- ========== NAVIGATION ========== -->
+<nav>
+  <ul>
+    <li><a href="#project1">VRもぐらたたき</a></li>
+    <li><a href="#project2">窓ツールキット</a></li>
+    <li><a href="#project3">CONNECT</a></li>
+    <li><a href="#project4">Web線香花火</a></li>
+  </ul>
+</nav>
 
-  <!-- ──── 01 VRもぐらたたき ──── -->
-  <article class="work-card">
-    <div class="work-visual">
-      <div class="img-strip" data-slide="mogura">
-        <img src="img/mogura_01.png" alt="VRもぐらたたき - スクリーンショット1">
-        <img src="img/mogura_02.png" alt="VRもぐらたたき - スクリーンショット2">
+<!-- ========== MAIN ========== -->
+<main>
+  <h2 class="section-title">Projects</h2>
+
+  <!-- ========== PROJECT 1: VRもぐらたたき ========== -->
+  <article class="project" id="project1">
+    <div class="project-header">
+      <div class="project-number">PROJECT 01</div>
+      <h3 class="project-title">VR もぐらたたき</h3>
+      <div class="project-meta">
+        <span>📅 2025年8月</span>
+        <span>🎯 オープンキャンパス展示</span>
+        <span>👥 チーム開発（3人）</span>
       </div>
-      <div class="slide-nav" data-target="mogura">
-        <button class="slide-dot active" onclick="goSlide('mogura',0)"></button>
-        <button class="slide-dot" onclick="goSlide('mogura',1)"></button>
-      </div>
-    </div>
-    <div class="work-info">
-      <span class="work-number">01</span>
-      <h2>VR もぐらたたき</h2>
-      <div class="work-tags">
+      <div class="project-tags">
         <span class="tag">Unity</span>
         <span class="tag">UdonSharp</span>
         <span class="tag">VRChat</span>
         <span class="tag">マルチプレイヤー</span>
       </div>
-      <p>
-        オープンキャンパスの研究室の出し物として制作したVRChat用対戦ゲーム。
-        モグラ役とハンマー役に分かれた対戦モードを実装し、
-        UdonSharpによるネットワーク同期で最大8人のマルチプレイヤー対応を実現した。
-      </p>
-      <div class="work-meta-row">
-        <span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-          2025年8月
-        </span>
+    </div>
+
+    <div class="project-content">
+      <!-- メディア -->
+      <div class="media-gallery">
+        <div class="media-item">
+          <img src="img/mogura_01.png" alt="VRもぐらたたき - ゲーム画面1">
+        </div>
+        <div class="media-item">
+          <img src="img/mogura_02.png" alt="VRもぐらたたき - ゲーム画面2">
+        </div>
       </div>
-      <div style="display:flex; gap:16px; align-items:center; flex-wrap:wrap; margin-top:4px;">
-        <button class="detail-btn" onclick="openDetail('mogura')">
-          詳細を見る
-          <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </button>
-        <!-- ── GitURL を下記の href に入れる ── -->
-        <a href="YOUR_GITHUB_URL_HERE" target="_blank" rel="noopener" class="github-link">
-          <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-          GitHubで見る
-        </a>
+
+      <!-- 概要 -->
+      <div class="project-section">
+        <h4 class="project-section-title">概要</h4>
+        <p>
+          VRChat上で遊べるマルチプレイヤー対戦ゲームです。オープンキャンパスの研究室展示用に制作しました。
+          モグラ役のプレイヤーが穴から頭を出してゴールを目指し、ハンマー役のプレイヤーがそれを妨げる対戦形式になっています。
+          最大8人までの同時プレイに対応し、UdonSharpによるネットワーク同期を実装しています。
+        </p>
       </div>
+
+      <!-- ゲームの流れ -->
+      <div class="project-section">
+        <h4 class="project-section-title">ゲームの流れ</h4>
+        <p>
+          1. プレイヤーは参加ボタンを押してゲームに参加<br>
+          2. マスタープレイヤーが開始ボタンを押すと全員のタイマーが開始<br>
+          3. モグラ役は穴から頭を出し、地上に留まることでタイマーが減少<br>
+          4. ハンマーに叩かれるとタイマーに3秒追加されるペナルティ<br>
+          5. タイマーが0になったプレイヤーはクリアゾーンにテレポート
+        </p>
+      </div>
+
+      <!-- スクリプト構成 -->
+      <div class="project-section">
+        <h4 class="project-section-title">スクリプト構成</h4>
+        <table class="info-table">
+          <tr>
+            <th>MoleGameManager.cs</th>
+            <td>ゲーム全体の管理（タイマー・同期・テレポート・ゲーム開始/終了）</td>
+          </tr>
+          <tr>
+            <th>HammerHitDetector.cs</th>
+            <td>ハンマーがプレイヤーに当たったことを検出し、GameManagerに通知</td>
+          </tr>
+          <tr>
+            <th>HammerFollower.cs</th>
+            <td>ハンマーオブジェクトをVRコントローラーの手に追従させる</td>
+          </tr>
+          <tr>
+            <th>SimpleButtonHandler.cs</th>
+            <td>参加ボタン・開始ボタンのタッチ操作を処理</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- 技術的なポイント -->
+      <div class="project-section">
+        <h4 class="project-section-title">技術的なポイント</h4>
+        <p>
+          <strong>ネットワーク同期：</strong>
+          <code>[UdonSynced]</code>属性を使用し、プレイヤー間でゲーム状態を同期しています。
+          マスターが権限を持ち、<code>OnDeserialization()</code>で各クライアントに状態を通知する設計です。
+        </p>
+        <p style="margin-top: 12px;">
+          <strong>テレポート処理：</strong>
+          VRChatの仕様上、各プレイヤーは自身のみテレポート可能なため、同期されたクリア情報を元に本人側で実行し、
+          フラグによって重複テレポートを防止しています。
+        </p>
+        <p style="margin-top: 12px;">
+          <strong>ヒット判定：</strong>
+          ハンマーの連続ヒットはクールダウン機能で防止され、ヒット時にはパーティクルエフェクトやサウンドも再生されます。
+        </p>
+      </div>
+
+      <!-- GitHubリンク -->
+      <a href="YOUR_GITHUB_URL_HERE" target="_blank" class="github-link">
+        <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+        GitHubでコードを見る
+      </a>
     </div>
   </article>
 
-  <!-- ──── 02 窓ツールキット ──── -->
-  <article class="work-card">
-    <div class="work-visual">
-      <div class="video-thumb" onclick="openModal('mado')">
-        <img src="img/mado_thumb.png" alt="窓ツールキット - サムネイル">
-        <div class="play-btn">
-          <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
-        </div>
-        <div class="video-badge">▶ 動画あり</div>
+  <!-- ========== PROJECT 2: 窓ツールキット ========== -->
+  <article class="project" id="project2">
+    <div class="project-header">
+      <div class="project-number">PROJECT 02</div>
+      <h3 class="project-title">窓ツールキット（MadoToolkit）</h3>
+      <div class="project-meta">
+        <span>📅 2025年9月〜12月</span>
+        <span>🎯 研究室プロジェクト</span>
+        <span>👥 チーム開発（2人）</span>
       </div>
-    </div>
-    <div class="work-info">
-      <span class="work-number">02</span>
-      <h2>窓ツールキット</h2>
-      <div class="work-tags">
+      <div class="project-tags">
         <span class="tag">Unity</span>
         <span class="tag">UdonSharp</span>
         <span class="tag">VRChat</span>
         <span class="tag">シューティング</span>
       </div>
-      <p>
-        研究室で2人で開発したVRChat用シューティングゲームシステム。
-        モニターのキャリブレーション仕組みを実装し、VR空間と現実のモニターを同期させた。
-        レイキャスト射線による当判定や、複数モニターの管理・スコア同期なども開発に携わった。
-      </p>
-      <div class="work-meta-row">
-        <span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-          2025年9月 〜 12月
-        </span>
-        <span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          チーム開発（2人）
-        </span>
+    </div>
+
+    <div class="project-content">
+      <!-- メディア -->
+      <div class="media-gallery">
+        <div class="media-item video-item" onclick="openModal('mado')">
+          <img src="img/mado_thumb.png" alt="窓ツールキット - サムネイル">
+          <div class="play-overlay">
+            <div class="play-btn">
+              <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+            </div>
+          </div>
+        </div>
       </div>
-      <button class="detail-btn" onclick="openDetail('mado')">
-        詳細を見る
-        <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </button>
+
+      <!-- 概要 -->
+      <div class="project-section">
+        <h4 class="project-section-title">概要</h4>
+        <p>
+          VRChatで現実世界とVR空間を繋ぐシューティングゲームシステムです。
+          VRプレイヤーがモニターを通して現実のプレイヤーを見ながら撃ち合うことができます。
+          モニターキャリブレーション・銃システム・レイキャスト射線・スコア管理の機能を提供しています。
+        </p>
+      </div>
+
+      <!-- 主な機能 -->
+      <div class="project-section">
+        <h4 class="project-section-title">主な機能</h4>
+        <p>
+          <strong>モニターキャリブレーション：</strong>VRコントローラーで4隅をポイントし、現実のモニター位置とVR内のモニターを自動同期<br><br>
+          <strong>カメラ手動調整：</strong>キーボード（WASD/QE）でカメラの位置・回転・ズームを微調整可能<br><br>
+          <strong>銃システム：</strong>VRコントローラーのトリガーで発射、手に追従する銃オブジェクト<br><br>
+          <strong>レイキャスト射線：</strong>弾がモニターを通過すると射線を生成し、プレイヤーを検出<br><br>
+          <strong>スコア管理：</strong>ヒット時にスコアをネットワーク同期
+        </p>
+      </div>
+
+      <!-- スクリプト構成 -->
+      <div class="project-section">
+        <h4 class="project-section-title">スクリプト構成</h4>
+        <table class="info-table">
+          <tr>
+            <th>HandController.cs</th>
+            <td>VRコントローラーの位置同期、銃の追従・発射処理</td>
+          </tr>
+          <tr>
+            <th>MadoCalibrator.cs</th>
+            <td>モニターキャリブレーション、カメラ手動調整</td>
+          </tr>
+          <tr>
+            <th>MadoOwnerManager.cs</th>
+            <td>複数モニターの管理、キャリブレーション開始</td>
+          </tr>
+          <tr>
+            <th>RayGenerator.cs</th>
+            <td>射線生成、ヒット判定</td>
+          </tr>
+          <tr>
+            <th>PlayerTracker.cs</th>
+            <td>プレイヤー追跡ヒットボックス</td>
+          </tr>
+          <tr>
+            <th>ScoreManager.cs</th>
+            <td>スコア管理、ネットワーク同期</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- 技術的なポイント -->
+      <div class="project-section">
+        <h4 class="project-section-title">技術的なポイント</h4>
+        <p>
+          <strong>ネットワーク同期：</strong>
+          手の位置と回転は<code>UdonSynced + RequestSerialization</code>で同期し、
+          スコアは<code>SendCustomNetworkEvent</code>で全プレイヤーに通知されます。
+          射線はローカルのみで、撃った人だけに見える仕様です。
+        </p>
+        <p style="margin-top: 12px;">
+          <strong>キャリブレーション：</strong>
+          VRコントローラーで4隅をポイントすることで、モニターの3D空間上での位置・回転・スケールを自動計算し、
+          VR内のモニターオブジェクトに適用します。
+        </p>
+      </div>
+
+      <!-- 担当範囲 -->
+      <div class="project-section">
+        <h4 class="project-section-title">担当した部分</h4>
+        <p>
+          2人チームでの開発で、私はモニターキャリブレーション機能、レイキャスト射線によるヒット判定、
+          複数モニターの管理システム、スコア同期機能を担当しました。
+        </p>
+      </div>
     </div>
   </article>
 
-  <!-- ──── 03 CONNECT ──── -->
-  <article class="work-card">
-    <div class="work-visual">
-      <!-- 画像4枚：img/connect_01.png ～ connect_04.png -->
-      <div class="img-strip" data-slide="connect">
-        <img src="img/connect_01.png" alt="CONNECT - スクリーンショット1">
-        <img src="img/connect_02.png" alt="CONNECT - スクリーンショット2">
-        <img src="img/connect_03.png" alt="CONNECT - スクリーンショット3">
-        <img src="img/connect_04.png" alt="CONNECT - スクリーンショット4">
+  <!-- ========== PROJECT 3: CONNECT ========== -->
+  <article class="project" id="project3">
+    <div class="project-header">
+      <div class="project-number">PROJECT 03</div>
+      <h3 class="project-title">CONNECT（旅行計画マッチングサイト）</h3>
+      <div class="project-meta">
+        <span>📅 2025年12月〜2026年1月</span>
+        <span>🎯 授業課題（個人で再実装）</span>
       </div>
-      <div class="slide-nav" data-target="connect">
-        <button class="slide-dot active" onclick="goSlide('connect',0)"></button>
-        <button class="slide-dot" onclick="goSlide('connect',1)"></button>
-        <button class="slide-dot" onclick="goSlide('connect',2)"></button>
-        <button class="slide-dot" onclick="goSlide('connect',3)"></button>
-      </div>
-    </div>
-    <div class="work-info">
-      <span class="work-number">03</span>
-      <h2>CONNECT</h2>
-      <div class="work-tags">
+      <div class="project-tags">
         <span class="tag">PHP</span>
         <span class="tag">MySQL</span>
         <span class="tag">JavaScript</span>
         <span class="tag">Leaflet</span>
-      </div>
-      <p>
-        授業課題でチームで開発した旅行計画マッチングサイトを、自分が担当したコードのみで再実装したプロジェクト。
-        マッチングアルゴリズムの設計やチャット機能、地図上での旅行計画作成など、
-        バックエンドとフロントエンドの両面で開発した。
-      </p>
-      <div class="work-meta-row">
-        <span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-          2025年12月 〜 2026年1月
-        </span>
-      </div>
-      <!-- ── GitURL を下記の href に入れる ── -->
-      <div style="display:flex; gap:16px; align-items:center; flex-wrap:wrap; margin-top:4px;">
-        <button class="detail-btn" onclick="openDetail('connect')">
-          詳細を見る
-          <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </button>
-        <a href="YOUR_GITHUB_URL_HERE" target="_blank" rel="noopener" class="github-link">
-          <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-          GitHubで見る
-        </a>
-      </div>
-  <article class="work-card">
-    <div class="work-visual">
-      <!-- 動画あり：video/hanabi.mp4。サムネイルは img/hanabi_thumb.png -->
-      <div class="video-thumb" onclick="openModal('hanabi')">
-        <img src="img/hanabi_thumb.png" alt="線香花火 - サムネイル">
-        <div class="play-btn">
-          <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
-        </div>
-        <div class="video-badge">▶ 動画あり</div>
+        <span class="tag">OpenStreetMap</span>
       </div>
     </div>
-    <div class="work-info">
-      <span class="work-number">04</span>
-      <h2>線香花火 3D シミュレーション</h2>
-      <div class="work-tags">
+
+    <div class="project-content">
+      <!-- メディア -->
+      <div class="media-gallery">
+        <div class="media-item">
+          <img src="img/connect_01.png" alt="CONNECT - 旅行計画作成画面">
+        </div>
+        <div class="media-item">
+          <img src="img/connect_02.png" alt="CONNECT - 新規登録画面">
+        </div>
+        <div class="media-item">
+          <img src="img/connect_03.png" alt="CONNECT - 計画一覧画面">
+        </div>
+        <div class="media-item">
+          <img src="img/connect_04.png" alt="CONNECT - マッチング画面">
+        </div>
+      </div>
+
+      <!-- 概要 -->
+      <div class="project-section">
+        <h4 class="project-section-title">概要</h4>
+        <p>
+          「〜旅の出会いを、もっと特別に〜」をコンセプトとした旅行計画マッチングサイトです。
+          授業課題でチームで開発した成果物を、自分が担当したコードのみで再実装したプロジェクトです。
+          旅行計画を共有して、同じ目的地や興味を持つ旅仲間を見つけることができます。
+        </p>
+      </div>
+
+      <!-- 主な機能 -->
+      <div class="project-section">
+        <h4 class="project-section-title">主な機能</h4>
+        <table class="info-table">
+          <tr>
+            <th>旅行計画の作成</th>
+            <td>地図での場所選択（OpenStreetMap）、目的・やりたいこと（18種類）の設定、写真アップロード</td>
+          </tr>
+          <tr>
+            <th>検索・フィルタリング</th>
+            <td>都道府県・旅行目的・やりたいこと・投稿者属性（出身地・性別・年齢）で絞り込み</td>
+          </tr>
+          <tr>
+            <th>自動マッチング</th>
+            <td>場所・目的・やりたいことの重要度を考慮した相性スコア（%）を計算、2つの計画を混ぜたおすすめプランを自動提案</td>
+          </tr>
+          <tr>
+            <th>コミュニケーション</th>
+            <td>いいね・コメント・1対1チャット・通知バッジ</td>
+          </tr>
+          <tr>
+            <th>仮想旅</th>
+            <td>10問の質問に答えて旅の価値観をチェック、相性度を自動計算</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- 技術スタック -->
+      <div class="project-section">
+        <h4 class="project-section-title">技術スタック</h4>
+        <div class="tech-list">
+          <span class="tech-item">PHP 7.x</span>
+          <span class="tech-item">MySQL (MariaDB)</span>
+          <span class="tech-item">HTML5 / CSS3</span>
+          <span class="tech-item">JavaScript</span>
+          <span class="tech-item">Leaflet + OpenStreetMap</span>
+        </div>
+      </div>
+
+      <!-- ファイル構成 -->
+      <div class="project-section">
+        <h4 class="project-section-title">主要ファイル構成</h4>
+        <p style="font-family: 'Source Code Pro', monospace; font-size: 13px; background: var(--bg-code); padding: 16px; border-radius: 8px; line-height: 1.6;">
+          travel_match/<br>
+          ├── index.php &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# トップページ<br>
+          ├── plan_create.php &nbsp;&nbsp;&nbsp;&nbsp;# 旅行計画作成・編集<br>
+          ├── plans.php &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# 計画一覧（リスト/地図表示）<br>
+          ├── matching.php &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# マッチング機能<br>
+          ├── chat.php &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# 1対1チャット<br>
+          ├── virtual_trip.php &nbsp;&nbsp;&nbsp;# 仮想旅<br>
+          └── api/ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# APIエンドポイント
+        </p>
+      </div>
+
+      <!-- GitHubリンク -->
+      <a href="YOUR_GITHUB_URL_HERE" target="_blank" class="github-link">
+        <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+        GitHubでコードを見る
+      </a>
+    </div>
+  </article>
+
+  <!-- ========== PROJECT 4: 線香花火 ========== -->
+  <article class="project" id="project4">
+    <div class="project-header">
+      <div class="project-number">PROJECT 04</div>
+      <h3 class="project-title">線香花火 3D シミュレーション</h3>
+      <div class="project-meta">
+        <span>📅 2025年12月</span>
+        <span>🎯 授業課題</span>
+        <span>👤 個人開発</span>
+      </div>
+      <div class="project-tags">
         <span class="tag">HTML</span>
         <span class="tag">JavaScript</span>
         <span class="tag">Three.js</span>
         <span class="tag">WebGL / GLSL</span>
       </div>
-      <p>
-        授業課題として制作した線香花火のWebGL 3Dシミュレーション。
-        Three.jsを使用し、4段階の燃え方を再現した。
-        枝分かれパーティクル・シェーダー火花・流星タイプの3種類の火花を実装し、
-        Bloomエフェクトによる発光表現も手がけた。
-      </p>
-      <div class="work-meta-row">
-        <span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-          2025年12月
-        </span>
-      </div>
-      <!-- ── GitURL を下記の href に入れる ── -->
-      <div style="display:flex; gap:16px; align-items:center; flex-wrap:wrap; margin-top:4px;">
-        <button class="detail-btn" onclick="openDetail('hanabi')">
-          詳細を見る
-          <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </button>
-        <a href="YOUR_GITHUB_URL_HERE" target="_blank" rel="noopener" class="github-link">
-          <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-          GitHubで見る
-        </a>
+    </div>
+
+    <div class="project-content">
+      <!-- メディア -->
+      <div class="media-gallery">
+        <div class="media-item video-item" onclick="openModal('hanabi')">
+          <img src="img/hanabi_thumb.png" alt="線香花火 - サムネイル">
+          <div class="play-overlay">
+            <div class="play-btn">
+              <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+            </div>
+          </div>
+        </div>
       </div>
 
-<!-- ────────────── FOOTER ────────────── -->
+      <!-- 概要 -->
+      <div class="project-section">
+        <h4 class="project-section-title">概要</h4>
+        <p>
+          Three.jsを使用したリアルな線香花火のWebGL 3Dシミュレーションです。
+          線香花火の4段階（蕾→牡丹→松葉→散り菊）の燃え方を再現しており、
+          3種類の火花タイプを切り替えて楽しめます。360度自由にカメラを回転して鑑賞できます。
+        </p>
+      </div>
+
+      <!-- 火花タイプ -->
+      <div class="project-section">
+        <h4 class="project-section-title">3種類の火花タイプ</h4>
+        <table class="info-table">
+          <tr>
+            <th>タイプ 1（枝分かれ）</th>
+            <td>液滴が破裂するように最大10回まで分岐する火花</td>
+          </tr>
+          <tr>
+            <th>タイプ 2（シェーダー）</th>
+            <td>GPU計算による滑らかな揺らぎと軌跡を持つ火花</td>
+          </tr>
+          <tr>
+            <th>タイプ 3（流星）</th>
+            <td>長い尾を引く流星のような火花</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- 技術的なポイント -->
+      <div class="project-section">
+        <h4 class="project-section-title">技術的なポイント</h4>
+        <p>
+          <strong>パーティクル描画：</strong>
+          火花の描画には<code>LineSegments</code>と<code>Points</code>を組み合わせて使用しています。
+          軌跡はLineSegmentsで、先端はPointsで描画し、リアルな火花の動きを再現しました。
+        </p>
+        <p style="margin-top: 12px;">
+          <strong>物理シミュレーション：</strong>
+          重力と空気抵抗を考慮した位置更新を行い、自然な火花の軌道を実現しています。
+        </p>
+        <p style="margin-top: 12px;">
+          <strong>火球シェーダー：</strong>
+          頂点シェーダーで表面の揺らぎを、フラグメントシェーダーでフレネル効果による発光表現を実装しています。
+        </p>
+        <p style="margin-top: 12px;">
+          <strong>Bloomエフェクト：</strong>
+          EffectComposerによるポストプロセッシングで、リアルな発光を強調しています。
+        </p>
+      </div>
+
+      <!-- 技術スタック -->
+      <div class="project-section">
+        <h4 class="project-section-title">技術スタック</h4>
+        <div class="tech-list">
+          <span class="tech-item">Three.js r128</span>
+          <span class="tech-item">WebGL / GLSL</span>
+          <span class="tech-item">EffectComposer (Bloom)</span>
+          <span class="tech-item">OrbitControls</span>
+        </div>
+      </div>
+
+      <!-- ファイル構成 -->
+      <div class="project-section">
+        <h4 class="project-section-title">ファイル構成</h4>
+        <p style="font-family: 'Source Code Pro', monospace; font-size: 13px; background: var(--bg-code); padding: 16px; border-radius: 8px; line-height: 1.6;">
+          ├── index.html &nbsp;&nbsp;&nbsp;# メインHTML<br>
+          ├── type1.js &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# 枝分かれパーティクル<br>
+          ├── type2.js &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# シェーダー火花<br>
+          └── type3.js &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# 流星タイプ
+        </p>
+      </div>
+
+      <!-- GitHubリンク -->
+      <a href="YOUR_GITHUB_URL_HERE" target="_blank" class="github-link">
+        <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+        GitHubでコードを見る
+      </a>
+    </div>
+  </article>
+
+</main>
+
+<!-- ========== FOOTER ========== -->
 <footer>
-  <p>&copy; 2026 高梨祐矢 — All rights reserved.</p>
-
+  <p>&copy; 2026 高梨祐矢 All rights reserved.</p>
 </footer>
 
-<!-- ────────────── VIDEO MODAL ────────────── -->
-<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
-  <div class="modal-box">
-    <button class="modal-close" onclick="closeModalBtn()">&times;</button>
-    <!-- 窓ツール動画: video/mado_01.mp4 -->
-    <div id="modal-mado">
-      <video id="video-mado" controls autoplay>
-        <source src="video/mado_01.mp4" type="video/mp4">
-      </video>
-    </div>
-    <!-- 線香花火動画: video/hanabi.mp4 -->
-    <div id="modal-hanabi" style="display:none;">
-      <video id="video-hanabi" controls autoplay>
-        <source src="video/hanabi.mp4" type="video/mp4">
-      </video>
-    </div>
+<!-- ========== VIDEO MODAL ========== -->
+<div class="modal-overlay" id="modal-mado" onclick="closeModal('mado', event)">
+  <div class="modal-content" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal('mado')">&times;</button>
+    <video id="video-mado" controls>
+      <source src="video/mado_01.mp4" type="video/mp4">
+    </video>
   </div>
 </div>
 
-<!-- ────────────── DETAIL MODALS ────────────── -->
-
-<!-- 01 もぐらたたき -->
-<div class="detail-modal-overlay" id="detail-mogura" onclick="closeDetailOutside(event, 'mogura')">
-  <div class="detail-modal">
-    <button class="detail-close" onclick="closeDetail('mogura')">&times;</button>
-    <div class="detail-number">01</div>
-    <h2>VR もぐらたたき</h2>
-    <div class="detail-tags">
-      <span class="tag">Unity</span>
-      <span class="tag">UdonSharp</span>
-      <span class="tag">VRChat</span>
-      <span class="tag">マルチプレイヤー</span>
-    </div>
-    <div class="detail-meta">
-      <span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-        開発期間：2025年8月
-      </span>
-      <span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
-        オープンキャンパスの研究室の出し物
-      </span>
-    </div>
-
-    <div class="detail-section-title">Overview</div>
-    <p>
-      VRChatで遊べるマルチプレイヤー対戦ゲームです。モグラ役のプレイヤーが穴から頭を出してゴールを目指し、
-      ハンマー役のプレイヤーがそれを妨げる対戦ゲームです。マスタープレイヤーが開始ボタンを押すと全員のタイマーが開始され、
-      地上に留まることでタイマーが減少していき、タイマーが0になった時にクリアとなります。
-    </p>
-
-    <div class="detail-section-title">スクリプト構成</div>
-    <table>
-      <tr><th>ファイル名</th><th>役割</th></tr>
-      <tr><td>MoleGameManager.cs</td><td>ゲーム全体の管理（タイマー・同期・テレポート・開始/終了）</td></tr>
-      <tr><td>HammerHitDetector.cs</td><td>ハンマーがプレイヤーに当たったことを検出し通知</td></tr>
-      <tr><td>HammerFollower.cs</td><td>ハンマーオブジェクトをVRコントローラーの手に追従させる</td></tr>
-      <tr><td>SimpleButtonHandler.cs</td><td>参加ボタン・開始ボタンのタッチ操作を処理</td></tr>
-    </table>
-
-    <div class="detail-section-title">技術的なポイント</div>
-    <p>
-      ネットワーク同期には <code style="color:var(--accent); background:var(--accent-dim); padding:2px 7px; border-radius:4px; font-size:13px;">[UdonSynced]</code> を使用し、
-      マスターが権限を持ちプレイヤー間でゲーム状態を同期しています。
-      各プレイヤーは自身のみテレポート可能なため、同期されたクリア情報を元に本人側で実行し、
-      フラグによって重複テレポートを防止しています。
-    </p>
-    <p>
-      ハンマーの連続ヒットはクールダウン機能で防止され、ヒット時にパーティクルエフェクトやサウンドも再生されます。
-      最大8人までの参加者を配列で管理し、各プレイヤーのタイマーやゲーム状態を保持する仕組みになっています。
-    </p>
+<div class="modal-overlay" id="modal-hanabi" onclick="closeModal('hanabi', event)">
+  <div class="modal-content" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal('hanabi')">&times;</button>
+    <video id="video-hanabi" controls>
+      <source src="video/hanabi.mp4" type="video/mp4">
+    </video>
   </div>
 </div>
 
-<!-- 02 窓ツールキット -->
-<div class="detail-modal-overlay" id="detail-mado" onclick="closeDetailOutside(event, 'mado')">
-  <div class="detail-modal">
-    <button class="detail-close" onclick="closeDetail('mado')">&times;</button>
-    <div class="detail-number">02</div>
-    <h2>窓ツールキット</h2>
-    <div class="detail-tags">
-      <span class="tag">Unity</span>
-      <span class="tag">UdonSharp</span>
-      <span class="tag">VRChat</span>
-      <span class="tag">シューティング</span>
-    </div>
-    <div class="detail-meta">
-      <span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-        開発期間：2025年9月 〜 12月
-      </span>
-      <span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-        チーム開発（2人）・研究室プロジェクト
-      </span>
-    </div>
-
-    <div class="detail-section-title">Overview</div>
-    <p>
-      VRChatで現実世界とVR空間を繋ぐシューティングゲームシステムです。
-      VRプレイヤーがモニターを通して現実のプレイヤーを見ながら撃ち合うことができます。
-      モニターキャリブレーション・銃システム・レイキャスト射線・スコア管理の機能を提供しています。
-    </p>
-
-    <div class="detail-section-title">スクリプト構成</div>
-    <table>
-      <tr><th>スクリプト</th><th>説明</th></tr>
-      <tr><td>HandController.cs</td><td>VRコントローラーの位置同期、銃の追従・発射</td></tr>
-      <tr><td>MadoCalibrator.cs</td><td>モニターキャリブレーション、カメラ手動調整</td></tr>
-      <tr><td>MadoOwnerManager.cs</td><td>複数モニターの管理、キャリブレーション開始</td></tr>
-      <tr><td>RayGenerator.cs</td><td>射線生成、ヒット判定</td></tr>
-      <tr><td>PlayerTracker.cs</td><td>プレイヤー追跡ヒットボックス</td></tr>
-      <tr><td>ScoreManager.cs</td><td>スコア管理、ネットワーク同期</td></tr>
-    </table>
-
-    <div class="detail-section-title">技術的なポイント</div>
-    <p>
-      キャリブレーションでは、VRコントローラーで4隅をポイントし、モニターの位置とVR内のモニターを自動で同期させます。
-      弾がモニターを通過すると射線を生成し、プレイヤーのヒットボックスを検出する仕組みになっています。
-    </p>
-    <p>
-      手の位置と回転は <code style="color:var(--accent); background:var(--accent-dim); padding:2px 7px; border-radius:4px; font-size:13px;">UdonSynced + RequestSerialization</code> で同期し、
-      スコアは <code style="color:var(--accent); background:var(--accent-dim); padding:2px 7px; border-radius:4px; font-size:13px;">SendCustomNetworkEvent</code> で全プレイヤーに通知されます。
-      射線はローカルのみで、撃った人だけ見える仕様です。
-    </p>
-  </div>
-</div>
-
-<!-- 03 CONNECT -->
-<div class="detail-modal-overlay" id="detail-connect" onclick="closeDetailOutside(event, 'connect')">
-  <div class="detail-modal">
-    <button class="detail-close" onclick="closeDetail('connect')">&times;</button>
-    <div class="detail-number">03</div>
-    <h2>CONNECT</h2>
-    <div class="detail-tags">
-      <span class="tag">PHP</span>
-      <span class="tag">MySQL</span>
-      <span class="tag">JavaScript</span>
-      <span class="tag">Leaflet</span>
-    </div>
-    <div class="detail-meta">
-      <span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-        開発期間：2025年12月 〜 2026年1月
-      </span>
-      <span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
-        授業課題・個人再実装
-      </span>
-    </div>
-
-    <div class="detail-section-title">Overview</div>
-    <p>
-      「〜旅の出会いを、もっと特別に〜」というコンセプトの旅行計画マッチングサイトです。
-      授業課題でチームで開発した成果物を、自分が担当したコードのみで再実装したプロジェクトです。
-      OpenStreetMapによる地図上での場所選択や、18種類の旅行目的による検索フィルタリング、
-      自動マッチング機能などを実装しています。
-    </p>
-
-    <div class="detail-section-title">主な機能</div>
-    <table>
-      <tr><th>機能</th><th>説明</th></tr>
-      <tr><td>旅行計画の作成</td><td>地図での場所選択・目的やりたいこと（18種類）の設定・写真アップロード</td></tr>
-      <tr><td>検索・フィルタリング</td><td>都道府県・旅行目的・やりたいこと・投稿者属性で絞り込み</td></tr>
-      <tr><td>自動マッチング</td><td>場所・目的・やりたいことの重要度を考慮した相性スコア計算</td></tr>
-      <tr><td>コミュニケーション</td><td>いいね・コメント・1対1チャット・通知バッジ</td></tr>
-      <tr><td>仮想旅</td><td>10問の質問で旅の価値観チェック・相性度の自動計算</td></tr>
-    </table>
-
-    <div class="detail-section-title">技術スタック</div>
-    <p>
-      バックエンドはPHP 7.x、データベースはMySQL（MariaDB）で構築しています。
-      フロントエンドにはHTML5・CSS3・JavaScriptを使用し、地図機能はLeaflet＋OpenStreetMapで無料で実現しています。
-    </p>
-  </div>
-</div>
-
-<!-- 04 線香花火 -->
-<div class="detail-modal-overlay" id="detail-hanabi" onclick="closeDetailOutside(event, 'hanabi')">
-  <div class="detail-modal">
-    <button class="detail-close" onclick="closeDetail('hanabi')">&times;</button>
-    <div class="detail-number">04</div>
-    <h2>線香花火 3D シミュレーション</h2>
-    <div class="detail-tags">
-      <span class="tag">HTML</span>
-      <span class="tag">JavaScript</span>
-      <span class="tag">Three.js</span>
-      <span class="tag">WebGL / GLSL</span>
-    </div>
-    <div class="detail-meta">
-      <span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-        開発期間：2025年12月
-      </span>
-      <span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
-        授業課題
-      </span>
-    </div>
-
-    <div class="detail-section-title">Overview</div>
-    <p>
-      Three.jsを使用した線香花火のWebGL 3Dシミュレーションです。
-      線香花火の4段階（蕾→牡丹→松葉→散り菊）の燃え方を再現しており、
-      3種類の火花タイプを切り替えて楽しめます。360度自由にカメラを回転して鑑賞できます。
-    </p>
-
-    <div class="detail-section-title">火花タイプ</div>
-    <table>
-      <tr><th>タイプ</th><th>特徴</th></tr>
-      <tr><td>タイプ 1</td><td>枝分かれする火花。液滴が破裂するように最大10回まで分岐</td></tr>
-      <tr><td>タイプ 2</td><td>シェーダー火花。GPU計算による滑らかな揺らぎと軌跡</td></tr>
-      <tr><td>タイプ 3</td><td>流星タイプ。長い尾を引く火花</td></tr>
-    </table>
-
-    <div class="detail-section-title">技術的なポイント</div>
-    <p>
-      火花の描画には <code style="color:var(--accent); background:var(--accent-dim); padding:2px 7px; border-radius:4px; font-size:13px;">LineSegments</code> と
-      <code style="color:var(--accent); background:var(--accent-dim); padding:2px 7px; border-radius:4px; font-size:13px;">Points</code> を組み合わせて使用しています。
-      軌跡はLineSegmentsで、先端はPointsで描画し、リアルな火花の動きを再現しました。
-    </p>
-    <p>
-      物理シミュレーションでは重力と空気抵抗を考慮した位置更新を行い、
-      火球シェーダーでは頂点シェーダーで表面の揺らぎを、フラグメントシェーダーでフレネル効果による発光表現を実装しています。
-      Bloomエフェクトによるポストプロセッシングでさらにリアルな発光を強調しています。
-    </p>
-  </div>
-</div>
-  // ─── Image Slide ───
-  function goSlide(id, index) {
-    const strip = document.querySelector('.img-strip[data-slide="' + id + '"]');
-    const imgs = strip.querySelectorAll('img');
-    const dots = document.querySelectorAll('.slide-nav[data-target="' + id + '"] .slide-dot');
-    strip.style.transform = 'translateX(-' + (index * 100) + '%)';
-    dots.forEach((d, i) => d.classList.toggle('active', i === index));
+<script>
+  function openModal(id) {
+    const modal = document.getElementById('modal-' + id);
+    const video = document.getElementById('video-' + id);
+    modal.classList.add('active');
+    video.play();
   }
-  // img-strip に transition を動的に適用
-  document.querySelectorAll('.img-strip[data-slide]').forEach(strip => {
-    strip.style.transition = 'transform 0.5s ease';
-  });
 
-  // ─── Detail Modal ───
-  function openDetail(id) {
-    document.getElementById('detail-' + id).classList.add('active');
+  function closeModal(id, event) {
+    if (event && event.target !== document.getElementById('modal-' + id)) return;
+    const modal = document.getElementById('modal-' + id);
+    const video = document.getElementById('video-' + id);
+    modal.classList.remove('active');
+    video.pause();
   }
-  function closeDetail(id) {
-    document.getElementById('detail-' + id).classList.remove('active');
-  }
-  function closeDetailOutside(e, id) {
-    if (e.target === document.getElementById('detail-' + id)) closeDetail(id);
-  }
-  document.addEventListener('keydown', e => {
+
+  document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
-      document.querySelectorAll('.detail-modal-overlay.active').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.modal-overlay.active').forEach(modal => {
+        const id = modal.id.replace('modal-', '');
+        closeModal(id);
+      });
     }
   });
-  function openModal(type) {
-    document.querySelectorAll('.modal-box > div').forEach(el => el.style.display = 'none');
-    document.getElementById('modal-' + type).style.display = 'block';
-    document.getElementById('video-' + type).play();
-    document.getElementById('modalOverlay').classList.add('active');
-  }
-  function closeModalBtn() {
-    document.getElementById('modalOverlay').classList.remove('active');
-    document.querySelectorAll('video').forEach(v => v.pause());
-  }
-  function closeModal(e) {
-    if (e.target === document.getElementById('modalOverlay')) closeModalBtn();
-  }
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalBtn(); });
 </script>
 
 </body>
